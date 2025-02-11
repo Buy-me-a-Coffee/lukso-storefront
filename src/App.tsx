@@ -1,6 +1,6 @@
 
-import Header from "./components/Header";
-import Storefront from "./components/Storefront";
+import Header from "./components/Header/Header";
+import Storefront from "./components/Storefront/Storefront";
 
 function App() {
   return (
