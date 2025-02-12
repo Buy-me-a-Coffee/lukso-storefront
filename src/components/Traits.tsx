@@ -40,7 +40,7 @@ const TraitList: React.FC<TraitListProps> = ({ onTraitsChange }) => {
   };
 
   return (
-    <div className="flex flex-col gap-[2px] self-start">
+    <div className="flex flex-col gap-[6px] self-start">
       {traits.map((trait, index) => (
         <Box
           key={index}

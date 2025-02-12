@@ -6,7 +6,7 @@ function Header() {
 
   return (
     <div className="global-main-grid-layout relative">
-      <div className="col-content h-20 w-full items-center justify-between flex">
+      <div className="col-content h-10 w-full items-center justify-between flex">
         <img src={logo} alt="logo" width={56} height={52} />
 
         {!loggedIn ? (

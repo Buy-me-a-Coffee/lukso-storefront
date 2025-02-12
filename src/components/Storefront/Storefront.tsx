@@ -2,8 +2,9 @@ import TextField from "@mui/material/TextField";
 import { useStorefront } from "./Storefront.hooks";
 import ImageUploadButton from "../ImageUploadButton";
 import TraitList from "../Traits";
-import { Button } from "@mui/material";
+import { Button, Slider } from "@mui/material";
 import PublishIcon from "@mui/icons-material/Publish";
+import DragAndDrop from "../DragAndDropFile";
 
 function Storefront() {
   const {
@@ -12,6 +13,8 @@ function Storefront() {
     imageSrc,
     handleTraitsChange,
     handleMintNft,
+    donationAmount,
+    handleDonationChange
   } = useStorefront();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,15 +23,17 @@ function Storefront() {
   };
 
   return (
-    <div className="col-content flex flex-col md:flex-row w-full h-full justify-between items-center gap-[8px]">
-      {imageSrc && (
-        <div className="flex flex-col w-full justify-center items-center h-[400px]">
+    <div className="col-content flex flex-col md:flex-row w-full h-full justify-between items-start gap-[32px]">
+      {imageSrc ? (
+        <div className="flex flex-col w-full justify-center items-center h-auto md:h-[400px]">
           <img
             src={imageSrc}
             alt="Uploaded Preview"
             style={{ maxWidth: "400px", width: "100%" }}
           />
         </div>
+      ) : (
+        <DragAndDrop handleImageUpload={handleFileChange} />
       )}
 
       <div className="flex flex-col w-full gap-[12px] justify-center items-center">
@@ -36,7 +41,7 @@ function Storefront() {
           id="standard-basic"
           name="name"
           className="w-full"
-          label="Name *"
+          label="NFT Name *"
           variant="standard"
           onChange={handleInputChange}
           color="secondary"
@@ -46,7 +51,7 @@ function Storefront() {
           id="standard-basic"
           name="description"
           className="w-full"
-          label="Description *"
+          label="Message to user *"
           variant="standard"
           color="secondary"
           onChange={handleInputChange}
@@ -60,6 +65,21 @@ function Storefront() {
         </div>
 
         <TraitList onTraitsChange={handleTraitsChange}></TraitList>
+
+        <div className="flex flex-col w-full items-start justify-start text-left gap-[4px] mt-[12px] mb-[12px]">
+          <span className="font-bold text-[20px]">Donation amount: {donationAmount} $</span>
+          <Slider
+            aria-label="Small steps"
+            defaultValue={1}
+            step={1}
+            min={1}
+            max={100}
+            valueLabelDisplay="auto"
+            color="secondary"
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            onChange={(e: any) => handleDonationChange(e?.target?.value)}
+          />
+        </div>
 
         <div className="self-center mt-[30px]">
           <Button

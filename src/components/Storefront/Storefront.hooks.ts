@@ -1,5 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Trait } from "../Traits";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../services/store";
+import { setNftMinted } from "../../services/state/nftMintedSlice";
 
 interface MintData {
   name: string;
@@ -7,12 +10,15 @@ interface MintData {
 }
 
 export const useStorefront = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  
   const [inputs, setInputs] = useState<MintData>({
     name: "",
     description: "",
   });
 
   const [traits, setTraits] = useState<Trait[]>([]);
+  const [donationAmount, setDonationAmount] = useState<number>(1);
 
   const [, setFile] = useState<File | null>(null);
 
@@ -42,11 +48,15 @@ export const useStorefront = () => {
     }
   };
 
+  const handleDonationChange = (newDonation: number) => {
+    setDonationAmount(newDonation)
+  }
+
   const handleMintNft = () => {
     // first check if name and description and image are there then proceed
     // call function inside web3folder
     // obviously user also needs to be logged in
-    alert('todo');
+    dispatch(setNftMinted(true));
   }
 
   return {
@@ -55,6 +65,8 @@ export const useStorefront = () => {
     imageSrc,
     handleFileChange,
     handleTraitsChange,
-    handleMintNft
+    handleMintNft,
+    handleDonationChange,
+    donationAmount
   };
 };
