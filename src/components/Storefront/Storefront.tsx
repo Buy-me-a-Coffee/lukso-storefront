@@ -14,7 +14,8 @@ function Storefront() {
     handleTraitsChange,
     handleMintNft,
     donationAmount,
-    handleDonationChange
+    handleDonationChange,
+    error,
   } = useStorefront();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,7 +68,9 @@ function Storefront() {
         <TraitList onTraitsChange={handleTraitsChange}></TraitList>
 
         <div className="flex flex-col w-full items-start justify-start text-left gap-[4px] mt-[12px] mb-[12px]">
-          <span className="font-bold text-[20px]">Donation amount: {donationAmount} $</span>
+          <span className="font-bold text-[20px]">
+            Donation amount: {donationAmount} $
+          </span>
           <Slider
             aria-label="Small steps"
             defaultValue={1}
@@ -80,7 +83,7 @@ function Storefront() {
             onChange={(e: any) => handleDonationChange(e?.target?.value)}
           />
         </div>
-
+        <p className="text-[#f44336] text-[20px] font-semibold">{error}</p>
         <div className="self-center mt-[30px]">
           <Button
             startIcon={<PublishIcon />}

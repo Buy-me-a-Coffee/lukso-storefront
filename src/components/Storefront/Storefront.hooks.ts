@@ -2,7 +2,10 @@ import { useState } from "react";
 import { Trait } from "../Traits";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../services/store";
-import { setNftMinted } from "../../services/state/nftMintedSlice";
+import {
+  setNftMinted,
+  setNftMintedImage,
+} from "../../services/state/nftMintedSlice";
 
 interface MintData {
   name: string;
@@ -11,7 +14,8 @@ interface MintData {
 
 export const useStorefront = () => {
   const dispatch = useDispatch<AppDispatch>();
-  
+
+  const [error, setError] = useState<string>("");
   const [inputs, setInputs] = useState<MintData>({
     name: "",
     description: "",
@@ -20,7 +24,7 @@ export const useStorefront = () => {
   const [traits, setTraits] = useState<Trait[]>([]);
   const [donationAmount, setDonationAmount] = useState<number>(1);
 
-  const [, setFile] = useState<File | null>(null);
+  const [file, setFile] = useState<File | null>(null);
 
   const [imageSrc, setImageSrc] = useState<string | null>(null);
 
@@ -49,15 +53,38 @@ export const useStorefront = () => {
   };
 
   const handleDonationChange = (newDonation: number) => {
-    setDonationAmount(newDonation)
-  }
+    setDonationAmount(newDonation);
+  };
 
   const handleMintNft = () => {
-    // first check if name and description and image are there then proceed
+    if (!inputs.description || !inputs.name || !imageSrc) {
+      setError("Please fill out all fields!");
+      return;
+    }
+
+    // check if user is logged in (addd state to authenticationSlice.ts) - contact me
+
+    // FORM OK, continue
+
     // call function inside web3folder
-    // obviously user also needs to be logged in
+    /**
+     * example call
+     * 
+     * const payload = { description: description, name: name, traits: traits, file: file}
+     * await MintNFT.mint(payload).then(() => {
+     * 
+     * 
+     *     dispatch(setNftMinted(true));
+        // set the image source here from the one from IPFS, so users will be able to share to twitter
+           dispatch(setNftMintedImage(imageSrc))
+     * })
+     */
+
     dispatch(setNftMinted(true));
-  }
+
+    // set the image source here from the one from IPFS, so users will be able to share to twitter
+    dispatch(setNftMintedImage(imageSrc));
+  };
 
   return {
     inputs,
@@ -67,6 +94,7 @@ export const useStorefront = () => {
     handleTraitsChange,
     handleMintNft,
     handleDonationChange,
-    donationAmount
+    donationAmount,
+    error,
   };
 };
