@@ -1,7 +1,7 @@
-import Header from "./components/Header/Header";
 import Storefront from "./components/Storefront/Storefront";
 import { useSelector } from "react-redux";
 import { RootState } from "./services/store";
+import Header from "./components/Header";
 
 function App() {
   const { nftMinted, nftMintedImage } = useSelector(

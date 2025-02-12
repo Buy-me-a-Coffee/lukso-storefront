@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Trait } from "../Traits";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../services/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../services/store";
 import {
   setNftMinted,
   setNftMintedImage,
@@ -14,6 +14,8 @@ interface MintData {
 
 export const useStorefront = () => {
   const dispatch = useDispatch<AppDispatch>();
+
+  const { authenticated } = useSelector((state: RootState) => state);
 
   const [error, setError] = useState<string>("");
   const [inputs, setInputs] = useState<MintData>({
@@ -62,7 +64,10 @@ export const useStorefront = () => {
       return;
     }
 
-    // check if user is logged in (addd state to authenticationSlice.ts) - contact me
+    if (!authenticated) {
+      setError("Please connect your wallet!");
+      return;
+    }
 
     // FORM OK, continue
 
