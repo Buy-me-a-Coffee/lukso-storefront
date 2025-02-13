@@ -3,17 +3,31 @@ import { useSelector } from "react-redux";
 import { RootState } from "./services/store";
 import Header from "./components/Header";
 import { useUpProvider } from "./services/providers/UPProvider";
+import { CircularProgress } from "@mui/material";
 
 function App() {
   const { nftMinted, nftMintedImage } = useSelector(
     (state: RootState) => state.nftMinted
   );
-  const { contextAccounts, client, accounts, walletConnected } = useUpProvider();
+  const { contextAccounts, ready, accounts } = useUpProvider();
 
-  console.log(contextAccounts, client, accounts, walletConnected, 'lol');
-  if (!walletConnected || contextAccounts[0] === accounts[0]) {
+  if (!ready) {
     return (
-      <div className="flex flex-col h-full w-full gap-[14px] bg-white p-[0.2rem] overflow-y-auto h-screen col-content">
+      <div className="flex flex-col h-full w-full gap-[14px] bg-white p-[0.2rem] overflow-y-auto h-screen col-content justify-center items-center">
+        <CircularProgress color="secondary" />
+      </div>
+    );
+  }
+
+  if (
+    contextAccounts &&
+    contextAccounts.length > 0 &&
+    accounts &&
+    accounts.length > 0 &&
+    contextAccounts[0].toLowerCase() === accounts[0].toLowerCase().toLowerCase()
+  ) {
+    return (
+      <div className="flex flex-col h-full w-full gap-[14px] bg-white p-[0.2rem] overflow-y-auto h-screen col-content justify-center items-center">
         <span className="font-bold text-[24px] block mb-4">
           Welcome to your page!
         </span>

@@ -13,6 +13,7 @@
  * - walletConnected: Boolean indicating active wallet connection
  * - selectedAddress: Currently selected address for transactions
  * - isSearching: Loading state indicator
+ * - ready: Boolean indicating if the provider is ready
  */
 
 import { createClientUPProvider } from "@lukso/up-provider";
@@ -33,6 +34,7 @@ interface UpProviderContext {
   setSelectedAddress: (address: `0x${string}` | null) => void;
   isSearching: boolean;
   setIsSearching: (isSearching: boolean) => void;
+  ready: boolean;
 }
 
 const UpContext = createContext<UpProviderContext | undefined>(undefined);
@@ -59,6 +61,7 @@ export function UpProvider({ children }: UpProviderProps) {
   const [walletConnected, setWalletConnected] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState<`0x${string}` | null>(null);
   const [isSearching, setIsSearching] = useState(false);
+  const [ready, setReady] = useState(false);
 
   // Memoize client creation to prevent unnecessary re-renders
   const client = useMemo(() => {
@@ -94,9 +97,11 @@ export function UpProvider({ children }: UpProviderProps) {
         setAccounts(_accounts as Array<`0x${string}`>);
         setContextAccounts(_contextAccounts);
         setWalletConnected(_accounts.length > 0 && _contextAccounts.length > 0);
+        setReady(true);
 
       } catch (error) {
         console.error(error);
+        setReady(true);
       }
     }
 
@@ -153,6 +158,7 @@ export function UpProvider({ children }: UpProviderProps) {
     setSelectedAddress,
     isSearching,
     setIsSearching,
+    ready,
   }), [
     chainId,
     accounts,
@@ -160,7 +166,8 @@ export function UpProvider({ children }: UpProviderProps) {
     walletConnected,
     selectedAddress,
     isSearching,
-    client
+    client,
+    ready,
   ]);
 
   return (
