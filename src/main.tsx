@@ -5,6 +5,7 @@ import App from "./App.tsx";
 import { Provider } from "react-redux";
 import store from "./services/store/index.ts";
 import { createTheme, ThemeProvider } from "@mui/material";
+import Privy from "./services/providers/PrivyProvider.tsx";
 
 const theme = createTheme({
   palette: {
@@ -21,9 +22,11 @@ const theme = createTheme({
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
+      <Privy>
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
+      </Privy>
     </Provider>
   </StrictMode>
 );
