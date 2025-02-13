@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Trait } from "../Traits";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../services/store";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../services/store";
 import {
   setNftMinted,
   setNftMintedImage,
@@ -15,7 +15,6 @@ interface MintData {
 export const useStorefront = () => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const { authenticated } = useSelector((state: RootState) => state);
 
   const [error, setError] = useState<string>("");
   const [inputs, setInputs] = useState<MintData>({
@@ -26,7 +25,7 @@ export const useStorefront = () => {
   const [traits, setTraits] = useState<Trait[]>([]);
   const [donationAmount, setDonationAmount] = useState<number>(1);
 
-  const [file, setFile] = useState<File | null>(null);
+  const [_, setFile] = useState<File | null>(null);
 
   const [imageSrc, setImageSrc] = useState<string | null>(null);
 
@@ -61,11 +60,6 @@ export const useStorefront = () => {
   const handleMintNft = () => {
     if (!inputs.description || !inputs.name || !imageSrc) {
       setError("Please fill out all fields!");
-      return;
-    }
-
-    if (!authenticated) {
-      setError("Please connect your wallet!");
       return;
     }
 
