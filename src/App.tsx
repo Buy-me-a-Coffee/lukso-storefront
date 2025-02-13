@@ -11,15 +11,17 @@ function App() {
   const { contextAccounts, accounts, walletConnected } = useUpProvider();
 
   if (!walletConnected || contextAccounts[0] === accounts[0]) {
-    <div className="flex flex-col h-full w-full gap-[14px] bg-white p-[0.2rem] overflow-y-auto h-screen col-content">
-      <span className="font-bold text-[24px] block mb-4">
-        Welcome to your page!
-      </span>
-      <p className="text-gray-600">
-        You can't buy yourself a coffee, but you can share this page with others
-        😊
-      </p>
-    </div>;
+    return (
+      <div className="flex flex-col h-full w-full gap-[14px] bg-white p-[0.2rem] overflow-y-auto h-screen col-content">
+        <span className="font-bold text-[24px] block mb-4">
+          Welcome to your page!
+        </span>
+        <p className="text-gray-600">
+          You can't buy yourself a coffee, but you can share this page with
+          others 😊
+        </p>
+      </div>
+    );
   }
 
   return (
