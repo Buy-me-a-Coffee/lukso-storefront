@@ -84,7 +84,7 @@ function Storefront() {
           />
         </div>
         <p className="text-[#f44336] text-[20px] font-semibold">{error}</p>
-        <div className="self-center mt-[30px]">
+        <div className="self-center mt-[14px]">
           <Button
             startIcon={<PublishIcon />}
             variant="contained"
