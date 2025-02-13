@@ -41,6 +41,7 @@ const DragAndDrop: React.FC<TraitListProps> = ({ handleImageUpload }) => {
           accept="image/jpeg, image/png, image/webp, image/avif, image/gif"
           type="file"
           name="imageFile"
+          onClick={(e) => e.preventDefault()}
         />
         <div className="relative flex flex-col w-full items-center px-4 lg:px-0">
           <p className="font-semibold tracking-tight mb-2 text-center leading-5 text-[1.1rem] lg:text-[1.25rem] lg:text-left">

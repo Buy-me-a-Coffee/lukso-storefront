@@ -25,7 +25,7 @@ function Storefront() {
   };
 
   return (
-    <div className="col-content flex flex-col md:flex-row w-full h-full justify-between items-start gap-[14px]">
+    <div className="col-content flex flex-col md:flex-row w-full h-full justify-between items-start gap-[38px]">
       {imageSrc ? (
         <div className="flex flex-col w-full justify-center items-center h-auto md:h-[400px]">
           <img

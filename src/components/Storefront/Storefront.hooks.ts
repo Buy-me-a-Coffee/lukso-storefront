@@ -85,7 +85,7 @@ export const useStorefront = () => {
 
       dispatch(setNftMinted(true));
 
-      // set the image source here from the one from IPFS, so users will be able to share to twitter
+      // set the image source here from the one from IPFS
       dispatch(setNftMintedImage(imageSrc));
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
