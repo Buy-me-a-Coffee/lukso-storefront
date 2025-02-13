@@ -16,26 +16,24 @@ function App() {
   };
 
   return (
-    <>
+    <div className="flex flex-col h-full w-full gap-[24px] mb-[24px] bg-white p-6 overflow-y-auto">
       {nftMinted && (
-        <div className="flex flex-col h-full w-full gap-[24px] mb-[24px] border-b border-solid border-2 shadow-lg rounded-lg bg-white p-6">
-          <div className="global-main-grid-layout relative flex flex-col gap-[24px] justify-center items-center">
-            <span className="col-content font-bold text-[24px] text-center">
-              Thanks for the coffee!
-            </span>
-            <div className="flex flex-col w-full justify-center items-center h-auto md:h-[400px]">
-              <img
-                src={nftMintedImage!}
-                alt="Uploaded Preview"
-                style={{ maxWidth: "400px", width: "100%" }}
-              />
-            </div>
-            <span onClick={handleShare}>Share on X</span>
+        <div className="global-main-grid-layout relative flex flex-col gap-[24px] justify-center items-center">
+          <span className="col-content font-bold text-[24px] text-center">
+            Thanks for the coffee!
+          </span>
+          <div className="flex flex-col w-full justify-center items-center h-auto md:h-[400px]">
+            <img
+              src={nftMintedImage!}
+              alt="Uploaded Preview"
+              style={{ maxWidth: "400px", width: "100%" }}
+            />
           </div>
+          <span onClick={handleShare}>Share on X</span>
         </div>
       )}
       {!nftMinted && (
-        <div className="flex flex-col h-full w-full gap-[24px] mb-[24px] border-b border-solid border-2 shadow-lg rounded-lg bg-white p-6">
+        <>
           <Header></Header>
 
           <div className="global-main-grid-layout relative">
@@ -46,9 +44,9 @@ function App() {
           <div className="global-main-grid-layout relative mb-[24px]">
             <Storefront></Storefront>
           </div>
-        </div>
+        </>
       )}
-    </>
+    </div>
   );
 }
 
