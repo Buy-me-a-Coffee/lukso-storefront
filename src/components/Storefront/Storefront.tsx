@@ -24,13 +24,13 @@ function Storefront() {
   };
 
   return (
-    <div className="col-content flex flex-col md:flex-row w-full h-full justify-between items-start gap-[32px]">
+    <div className="col-content flex flex-col md:flex-row w-full h-full justify-between items-start gap-[14px]">
       {imageSrc ? (
         <div className="flex flex-col w-full justify-center items-center h-auto md:h-[400px]">
           <img
             src={imageSrc}
             alt="Uploaded Preview"
-            style={{ maxWidth: "400px", width: "100%" }}
+            style={{ maxWidth: "120px", width: "100%" }}
           />
         </div>
       ) : (
