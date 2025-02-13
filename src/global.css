@@ -34,7 +34,7 @@
     }
     
     ::-webkit-scrollbar-track {
-      background: #f0f0f0; /* Light background for the scrollbar track */
+      background: transparent /* Light background for the scrollbar track */
     }
 }
 
