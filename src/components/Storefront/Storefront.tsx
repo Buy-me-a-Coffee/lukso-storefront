@@ -2,7 +2,7 @@ import TextField from "@mui/material/TextField";
 import { useStorefront } from "./Storefront.hooks";
 import ImageUploadButton from "../ImageUploadButton";
 import TraitList from "../Traits";
-import { Button, Slider } from "@mui/material";
+import { Button, CircularProgress, Slider } from "@mui/material";
 import PublishIcon from "@mui/icons-material/Publish";
 import DragAndDrop from "../DragAndDropFile";
 
@@ -16,6 +16,7 @@ function Storefront() {
     donationAmount,
     handleDonationChange,
     error,
+    isLoading,
   } = useStorefront();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,15 +86,19 @@ function Storefront() {
         </div>
         <p className="text-[#f44336] text-[20px] font-semibold">{error}</p>
         <div className="self-center mt-[14px]">
-          <Button
-            startIcon={<PublishIcon />}
-            variant="contained"
-            onClick={handleMintNft}
-            color="secondary"
-            sx={{ maxWidth: "140px" }}
-          >
-            Mint NFT
-          </Button>
+          {isLoading ? (
+            <CircularProgress />
+          ) : (
+            <Button
+              startIcon={<PublishIcon />}
+              variant="contained"
+              onClick={handleMintNft}
+              color="secondary"
+              sx={{ maxWidth: "140px" }}
+            >
+              Mint NFT
+            </Button>
+          )}
         </div>
       </div>
     </div>

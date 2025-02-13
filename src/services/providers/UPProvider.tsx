@@ -18,7 +18,7 @@
 import { createClientUPProvider } from "@lukso/up-provider";
 import { createWalletClient, custom } from "viem";
 import { lukso, luksoTestnet } from "viem/chains";
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, ReactNode, useMemo } from "react";
 
 interface UpProviderContext {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -60,7 +60,8 @@ export function UpProvider({ children }: UpProviderProps) {
   const [selectedAddress, setSelectedAddress] = useState<`0x${string}` | null>(null);
   const [isSearching, setIsSearching] = useState(false);
 
-  const client = (() => {
+  // Memoize client creation to prevent unnecessary re-renders
+  const client = useMemo(() => {
     if (provider && chainId) {
       return createWalletClient({
         chain: chainId === 42 ? lukso : luksoTestnet,
@@ -68,7 +69,7 @@ export function UpProvider({ children }: UpProviderProps) {
       });
     }
     return null;
-  })();
+  }, [chainId]);
 
   useEffect(() => {
     let mounted = true;
@@ -77,18 +78,23 @@ export function UpProvider({ children }: UpProviderProps) {
       try {
         if (!client || !provider) return;
 
-        const _chainId = (await client.getChainId()) as number;
-        if (!mounted) return;
-        setChainId(_chainId);
+        // Batch state updates
+        const updates = await Promise.all([
+          client.getChainId(),
+          client.getAddresses(),
+        ]);
 
-        const _accounts = (await client.getAddresses()) as Array<`0x${string}`>;
         if (!mounted) return;
-        setAccounts(_accounts);
 
+        const [_chainId, _accounts] = updates;
         const _contextAccounts = provider.contextAccounts;
-        if (!mounted) return;
+
+        // Update state in one render cycle
+        setChainId(_chainId as number);
+        setAccounts(_accounts as Array<`0x${string}`>);
         setContextAccounts(_contextAccounts);
         setWalletConnected(_accounts.length > 0 && _contextAccounts.length > 0);
+
       } catch (error) {
         console.error(error);
       }
@@ -97,49 +103,69 @@ export function UpProvider({ children }: UpProviderProps) {
     init();
 
     if (provider) {
-      const accountsChanged = (_accounts: Array<`0x${string}`>) => {
-        setAccounts(_accounts);
-        setWalletConnected(_accounts.length > 0 && contextAccounts.length > 0);
+      const handleUpdates = (
+        type: 'accounts' | 'context' | 'chain',
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        value: any
+      ) => {
+        if (!mounted) return;
+        
+        switch (type) {
+          case 'accounts':
+            setAccounts(value);
+            setWalletConnected(value.length > 0 && contextAccounts.length > 0);
+            break;
+          case 'context':
+            setContextAccounts(value);
+            setWalletConnected(accounts.length > 0 && value.length > 0);
+            break;
+          case 'chain':
+            setChainId(value);
+            break;
+        }
       };
 
-      const contextAccountsChanged = (_accounts: Array<`0x${string}`>) => {
-        setContextAccounts(_accounts);
-        setWalletConnected(accounts.length > 0 && _accounts.length > 0);
-      };
-
-      const chainChanged = (_chainId: number) => {
-        setChainId(_chainId);
-      };
-
-      provider.on("accountsChanged", accountsChanged);
-      provider.on("chainChanged", chainChanged);
-      provider.on("contextAccountsChanged", contextAccountsChanged);
+      provider.on("accountsChanged", 
+        (accs: Array<`0x${string}`>) => handleUpdates('accounts', accs)
+      );
+      provider.on("chainChanged", 
+        (chain: number) => handleUpdates('chain', chain)
+      );
+      provider.on("contextAccountsChanged", 
+        (accs: Array<`0x${string}`>) => handleUpdates('context', accs)
+      );
 
       return () => {
         mounted = false;
-        provider.removeListener("accountsChanged", accountsChanged);
-        provider.removeListener("contextAccountsChanged", contextAccountsChanged);
-        provider.removeListener("chainChanged", chainChanged);
+        provider.removeAllListeners();
       };
     }
-  }, [client, accounts.length, contextAccounts.length]);
+  }, [accounts.length, client, contextAccounts.length]); // Removed dependencies that might cause frequent re-renders
+
+  const value = useMemo(() => ({
+    provider,
+    client,
+    chainId,
+    accounts,
+    contextAccounts,
+    walletConnected,
+    selectedAddress,
+    setSelectedAddress,
+    isSearching,
+    setIsSearching,
+  }), [
+    chainId,
+    accounts,
+    contextAccounts,
+    walletConnected,
+    selectedAddress,
+    isSearching,
+    client
+  ]);
 
   return (
-    <UpContext.Provider
-      value={{
-        provider,
-        client,
-        chainId,
-        accounts,
-        contextAccounts,
-        walletConnected,
-        selectedAddress,
-        setSelectedAddress,
-        isSearching,
-        setIsSearching,
-      }}
-    >
-        {children}
+    <UpContext.Provider value={value}>
+      {children}
     </UpContext.Provider>
   );
 } 
