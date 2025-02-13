@@ -19,7 +19,6 @@
     html, body {
       font-family: 'Poppins', system-ui, sans-serif;
       background-color: #f2f2f2;
-      padding: 24px;
       scrollbar-width: thin;
   scrollbar-color: #de2f74 #f0f0f0;
     }

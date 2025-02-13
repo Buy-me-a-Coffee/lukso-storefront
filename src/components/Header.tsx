@@ -10,23 +10,9 @@ function AuthButton() {
   if (!ready) return <CircularProgress color="secondary" />;
 
   return user ? (
-    <Button
-      startIcon={<LogoutIcon />}
-      variant="contained"
-      onClick={logout}
-      color="secondary"
-    >
-      Logout
-    </Button>
+    <LogoutIcon onClick={logout}/>
   ) : (
-    <Button
-      startIcon={<LoginIcon />}
-      variant="contained"
-      onClick={login}
-      color="secondary"
-    >
-      Connect Wallet
-    </Button>
+    <LoginIcon onClick={login}/>
   );
 }
 
