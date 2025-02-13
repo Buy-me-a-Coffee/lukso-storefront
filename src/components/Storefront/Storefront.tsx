@@ -70,7 +70,7 @@ function Storefront() {
 
         <div className="flex flex-col w-full items-start justify-start text-left gap-[4px] mt-[12px] mb-[12px]">
           <span className="font-bold text-[18px]">
-            Donation amount: {donationAmount} $
+            Donation amount: {donationAmount} LYX
           </span>
           <Slider
             aria-label="Small steps"
