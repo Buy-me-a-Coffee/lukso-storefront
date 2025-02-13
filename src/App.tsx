@@ -2,22 +2,11 @@ import Storefront from "./components/Storefront/Storefront";
 import { useSelector } from "react-redux";
 import { RootState } from "./services/store";
 import Header from "./components/Header";
-import { useUpProvider } from "./services/providers/UPProvider";
 
 function App() {
   const { nftMinted, nftMintedImage } = useSelector(
     (state: RootState) => state.nftMinted
   );
-
-  
-  const { contextAccounts } = useUpProvider();
-
-  const handleShare = () => {
-    const text = `I just minted an NFT for ${contextAccounts[0]} from UP`;
-    const tweetText = `${text} ${nftMintedImage}`;
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
-    window.open(twitterUrl, '_blank');
-  };
 
   return (
     <div className="flex flex-col h-full w-full gap-[14px] bg-white p-[0.2rem] overflow-y-auto h-screen">
@@ -33,7 +22,6 @@ function App() {
               style={{ maxWidth: "400px", width: "100%" }}
             />
           </div>
-          <span onClick={handleShare}>Share on X</span>
         </div>
       )}
       {!nftMinted && (
