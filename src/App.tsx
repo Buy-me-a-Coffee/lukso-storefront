@@ -8,8 +8,9 @@ function App() {
   const { nftMinted, nftMintedImage } = useSelector(
     (state: RootState) => state.nftMinted
   );
-  const { contextAccounts, accounts, walletConnected } = useUpProvider();
+  const { contextAccounts, client, accounts, walletConnected } = useUpProvider();
 
+  console.log(contextAccounts, client, accounts, walletConnected, 'lol');
   if (!walletConnected || contextAccounts[0] === accounts[0]) {
     return (
       <div className="flex flex-col h-full w-full gap-[14px] bg-white p-[0.2rem] overflow-y-auto h-screen col-content">
