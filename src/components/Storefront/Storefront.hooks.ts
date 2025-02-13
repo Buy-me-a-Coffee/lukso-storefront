@@ -16,9 +16,8 @@ interface MintData {
 
 export const useStorefront = () => {
   const dispatch = useDispatch<AppDispatch>();
-  
-  const { contextAccounts, walletConnected } =
-  useUpProvider();
+
+  const { contextAccounts, walletConnected } = useUpProvider();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -63,7 +62,7 @@ export const useStorefront = () => {
     setDonationAmount(newDonation);
   };
 
-  const handleMintNft = async() => {
+  const handleMintNft = async () => {
     setError("");
     if (!inputs.description || !inputs.name || !imageSrc) {
       setError("Please fill out all fields!");
@@ -78,17 +77,23 @@ export const useStorefront = () => {
     setIsLoading(true);
 
     try {
+      // send the money
       await sendTransaction(contextAccounts[0], donationAmount);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+      // mint the NFT to the contextWallet
+      // await mintNft(contextAccounts[0], imageSrc, inputs.name, inputs.description, traits);
+
+      dispatch(setNftMinted(true));
+
+      // set the image source here from the one from IPFS, so users will be able to share to twitter
+      dispatch(setNftMintedImage(imageSrc));
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.error(err);
       setError("Transaction failed!");
+      setIsLoading(false);
     }
-
-    dispatch(setNftMinted(true));
-
-    // set the image source here from the one from IPFS, so users will be able to share to twitter
-    dispatch(setNftMintedImage(imageSrc));
   };
 
   return {
