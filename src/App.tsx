@@ -18,7 +18,7 @@ function App() {
   return (
     <>
       {nftMinted && (
-        <div className="flex flex-col h-full w-full gap-[48px] mb-[24px] border-b border-solid border-2 shadow-lg rounded-lg bg-white p-6">
+        <div className="flex flex-col h-full w-full gap-[24px] mb-[24px] border-b border-solid border-2 shadow-lg rounded-lg bg-white p-6">
           <div className="global-main-grid-layout relative flex flex-col gap-[24px] justify-center items-center">
             <span className="col-content font-bold text-[24px] text-center">
               Thanks for the coffee!
@@ -35,7 +35,7 @@ function App() {
         </div>
       )}
       {!nftMinted && (
-        <div className="flex flex-col h-full w-full gap-[48px] mb-[24px] border-b border-solid border-2 shadow-lg rounded-lg bg-white p-6">
+        <div className="flex flex-col h-full w-full gap-[24px] mb-[24px] border-b border-solid border-2 shadow-lg rounded-lg bg-white p-6">
           <Header></Header>
 
           <div className="global-main-grid-layout relative">

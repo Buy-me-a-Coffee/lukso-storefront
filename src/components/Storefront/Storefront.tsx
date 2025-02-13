@@ -68,7 +68,7 @@ function Storefront() {
         <TraitList onTraitsChange={handleTraitsChange}></TraitList>
 
         <div className="flex flex-col w-full items-start justify-start text-left gap-[4px] mt-[12px] mb-[12px]">
-          <span className="font-bold text-[20px]">
+          <span className="font-bold text-[18px]">
             Donation amount: {donationAmount} $
           </span>
           <Slider
