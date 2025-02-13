@@ -75,6 +75,7 @@ export function UpProvider({ children }: UpProviderProps) {
   }, [chainId]);
 
   useEffect(() => {
+    setReady(false);
     let mounted = true;
 
     async function init() {
