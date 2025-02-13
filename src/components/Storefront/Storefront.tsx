@@ -31,7 +31,7 @@ function Storefront() {
           <img
             src={imageSrc}
             alt="Uploaded Preview"
-            className="w-full md:max-w-[400px] max-w-[120px]"
+            className="w-full md:max-w-[400px] max-w-[120px] rounded-[8px]"
           />
         </div>
       ) : (
