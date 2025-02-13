@@ -19,7 +19,7 @@ function App() {
             <img
               src={nftMintedImage!}
               alt="Uploaded Preview"
-              style={{ maxWidth: "400px", width: "100%" }}
+              style={{ maxWidth: "140px", width: "100%" }}
             />
           </div>
         </div>
