@@ -7,6 +7,8 @@ import {
   setNftMintedImage,
 } from "../../services/state/nftMintedSlice";
 import { useUpProvider } from "../../services/providers/UPProvider";
+import { sendTransaction } from "../../services/web3/SendTransaction";
+import { uploadJsonToIpfs, uploadToIpfs } from "../../services/web3/IpfsService";
 
 interface MintData {
   name: string;
@@ -16,7 +18,7 @@ interface MintData {
 export const useStorefront = () => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const { walletConnected } = useUpProvider();
+  const { contextAccounts, walletConnected } = useUpProvider();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -29,7 +31,7 @@ export const useStorefront = () => {
   const [traits, setTraits] = useState<Trait[]>([]);
   const [donationAmount, setDonationAmount] = useState<number>(1);
 
-  const [, setFile] = useState<File | null>(null);
+  const [_, setFile] = useState<File | null>(null);
 
   const [imageSrc, setImageSrc] = useState<string | null>(null);
 
@@ -72,9 +74,6 @@ export const useStorefront = () => {
       setError("Please connect your wallet!");
       return;
     }
-
-    setIsLoading(true);
-    setIsLoading(false);
 
     dispatch(setNftMinted(true));
 

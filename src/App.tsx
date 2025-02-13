@@ -2,17 +2,21 @@ import Storefront from "./components/Storefront/Storefront";
 import { useSelector } from "react-redux";
 import { RootState } from "./services/store";
 import Header from "./components/Header";
+import { useUpProvider } from "./services/providers/UPProvider";
 
 function App() {
   const { nftMinted, nftMintedImage } = useSelector(
     (state: RootState) => state.nftMinted
   );
 
+  
+  const { contextAccounts } = useUpProvider();
+
   const handleShare = () => {
-    // const text = 'hey';
-    // const tweetText = `${text} ${encodeURIComponent(imageUrl)}'}`;
-    // const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
-    // window.open(twitterUrl, '_blank');
+    const text = `I just minted an NFT for ${contextAccounts[0]} from UP`;
+    const tweetText = `${text} ${nftMintedImage}`;
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
+    window.open(twitterUrl, '_blank');
   };
 
   return (
