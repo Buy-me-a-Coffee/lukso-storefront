@@ -1,6 +1,6 @@
 import logo from "../assets/react.svg";
 import { usePrivy } from "@privy-io/react-auth";
-import { Button, CircularProgress } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 
