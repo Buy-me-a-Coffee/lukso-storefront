@@ -16,7 +16,7 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col h-full w-full gap-[24px] mb-[24px] bg-white p-6 overflow-y-auto">
+    <div className="flex flex-col h-full w-full gap-[14px] bg-white p-[0.2rem] overflow-y-auto h-screen">
       {nftMinted && (
         <div className="global-main-grid-layout relative flex flex-col gap-[24px] justify-center items-center">
           <span className="col-content font-bold text-[24px] text-center">
