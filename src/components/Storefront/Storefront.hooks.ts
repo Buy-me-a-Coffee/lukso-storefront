@@ -85,7 +85,8 @@ export const useStorefront = () => {
 
       dispatch(setNftMinted(true));
 
-      // set the image source here from the one from IPFS
+      // you don't need to set the image source from IPFS here, because you already have it in the imageSrc state
+      // leave this as is
       dispatch(setNftMintedImage(imageSrc));
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
