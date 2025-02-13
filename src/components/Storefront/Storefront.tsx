@@ -87,7 +87,7 @@ function Storefront() {
         <p className="text-[#f44336] text-[20px] font-semibold">{error}</p>
         <div className="self-center mt-[14px]">
           {isLoading ? (
-            <CircularProgress />
+            <CircularProgress color="secondary" />
           ) : (
             <Button
               startIcon={<PublishIcon />}
