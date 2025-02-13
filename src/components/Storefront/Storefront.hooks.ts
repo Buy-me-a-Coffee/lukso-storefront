@@ -7,6 +7,7 @@ import {
   setNftMintedImage,
 } from "../../services/state/nftMintedSlice";
 import { useUpProvider } from "../../services/providers/UPProvider";
+import { sendTransaction } from "../../services/web3/SendTransaction";
 
 interface MintData {
   name: string;
@@ -15,10 +16,11 @@ interface MintData {
 
 export const useStorefront = () => {
   const dispatch = useDispatch<AppDispatch>();
+  
+  const { contextAccounts, walletConnected } =
+  useUpProvider();
 
-  const {  walletConnected } = useUpProvider();
-
-  const [isLoading, ] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [error, setError] = useState<string>("");
   const [inputs, setInputs] = useState<MintData>({
@@ -71,6 +73,16 @@ export const useStorefront = () => {
     if (!walletConnected) {
       setError("Please connect your wallet!");
       return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      await sendTransaction(contextAccounts[0], donationAmount);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      console.error(err);
+      setError("Transaction failed!");
     }
 
     dispatch(setNftMinted(true));
