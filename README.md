@@ -10,3 +10,7 @@ To start, use
 ```js
 npm run dev
 ```
+
+
+Video recording:
+https://www.loom.com/share/c5d819b91b604ff4bf97f1ad9e5ed31c
